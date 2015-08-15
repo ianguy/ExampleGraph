@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D01C5111B7FD426006742CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D01C5101B7FD426006742CB /* QuartzCore.framework */; };
+		0D01C5151B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D01C5141B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.m */; };
 		0D442A541B7C6C370048A549 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D442A531B7C6C370048A549 /* AppDelegate.m */; };
 		0D442A561B7C6C370048A549 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D442A551B7C6C370048A549 /* main.m */; };
 		0D442A581B7C6C370048A549 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D442A571B7C6C370048A549 /* Images.xcassets */; };
@@ -27,6 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D01C5101B7FD426006742CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0D01C5131B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+NSBezierPathUtilities.h"; sourceTree = "<group>"; };
+		0D01C5141B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+NSBezierPathUtilities.m"; sourceTree = "<group>"; };
 		0D442A4D1B7C6C370048A549 /* ExampleGraph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleGraph.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D442A511B7C6C370048A549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D442A521B7C6C370048A549 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D01C5111B7FD426006742CB /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +69,7 @@
 		0D442A441B7C6C370048A549 = {
 			isa = PBXGroup;
 			children = (
+				0D01C5101B7FD426006742CB /* QuartzCore.framework */,
 				0D442A4F1B7C6C370048A549 /* ExampleGraph */,
 				0D442A631B7C6C370048A549 /* ExampleGraphTests */,
 				0D442A4E1B7C6C370048A549 /* Products */,
@@ -98,6 +105,8 @@
 				0D442A701B7C6C920048A549 /* stockprices.json */,
 				0D442A511B7C6C370048A549 /* Info.plist */,
 				0D442A551B7C6C370048A549 /* main.m */,
+				0D01C5131B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.h */,
+				0D01C5141B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -219,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D01C5151B7FD7A5006742CB /* NSBezierPath+NSBezierPathUtilities.m in Sources */,
 				0D442A561B7C6C370048A549 /* main.m in Sources */,
 				0D5C6AC91B7D53CA00905CB7 /* IBStockGraph.m in Sources */,
 				0D442A541B7C6C370048A549 /* AppDelegate.m in Sources */,

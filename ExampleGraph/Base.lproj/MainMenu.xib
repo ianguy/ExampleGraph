@@ -676,7 +676,7 @@
                 <rect key="frame" x="0.0" y="5" width="512" height="325"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1LZ-WG-nCM" customClass="IBStockGraph">
+                    <customView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1LZ-WG-nCM" customClass="IBStockGraph">
                         <rect key="frame" x="0.0" y="0.0" width="512" height="320"/>
                     </customView>
                 </subviews>

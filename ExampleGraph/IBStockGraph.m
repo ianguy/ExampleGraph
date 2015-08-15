@@ -7,24 +7,23 @@
 //
 
 #import "IBStockGraph.h"
+#import "NSBezierPath+NSBezierPathUtilities.h"
+#import <QuartzCore/CAAnimation.h>
+#import <QuartzCore/CAShapeLayer.h>
 
 @implementation IBStockGraph{
 	NSDictionary * dataPoints;
 	NSUInteger minPriceInCents;
 	NSUInteger maxPriceInCents;
 	NSArray * sortedKeys;
-	NSAnimation * theAnim;
 	NSMutableArray * yAxisLabels;
+	NSUInteger axisOffset;
 }
 - (id)init{
 	self = [super init];
 	if (self){
 		self.yAxisMarkers = 4;
-		theAnim = [[NSAnimation alloc] initWithDuration:5.0
-										 animationCurve:NSAnimationEaseIn];
-		[theAnim setFrameRate:60.0];
-		[theAnim setAnimationBlockingMode:NSAnimationNonblocking];
-		[theAnim setDelegate:self];
+
 	}
 	return self;
 
@@ -33,11 +32,7 @@
 	self = [super initWithFrame:frameRect];
 	if (self){
 		self.yAxisMarkers = 4;
-		theAnim = [[NSAnimation alloc] initWithDuration:5.0
-										 animationCurve:NSAnimationEaseIn];
-		[theAnim setFrameRate:60.0];
-		[theAnim setAnimationBlockingMode:NSAnimationNonblocking];
-		[theAnim setDelegate:self];
+
 	}
 	return self;
 }
@@ -45,11 +40,8 @@
 	self = [super initWithCoder:coder];
 	if (self){
 		self.yAxisMarkers = 4;
-		theAnim = [[NSAnimation alloc] initWithDuration:5.0
-										 animationCurve:NSAnimationEaseIn];
-		[theAnim setFrameRate:60.0];
-		[theAnim setAnimationBlockingMode:NSAnimationNonblocking];
-		[theAnim setDelegate:self];
+		axisOffset = 32;
+
 	}
 	return self;
 }
@@ -58,7 +50,7 @@
 }
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
-	const NSUInteger axisOffset = 32;
+
 	if (dataPoints != nil){
 		NSUInteger xAxisLength = self.frame.size.width - (axisOffset*2);
 		NSUInteger yAxisLength = self.frame.size.height - (axisOffset*2);
@@ -113,7 +105,7 @@
 			NSUInteger centValue = [price floatValue]*100;
 			NSUInteger range = (maxPriceInCents-minPriceInCents);
 			NSPoint point = NSMakePoint(axisOffset + (i*(xAxisLength/dataPointCount)), axisOffset + ((centValue-minPriceInCents)*((float)yAxisLength/range)));
-			[NSBezierPath strokeRect:NSMakeRect(point.x, point.y, 2.0, 2.0)];
+			[NSBezierPath strokeRect:NSMakeRect(point.x-1, point.y-1, 2.0, 2.0)];
 			
 			graphPoints[i] = point;
 			i++;
@@ -121,13 +113,52 @@
 
 
 
-		// draw/animate lines
-		for (uint i = 0; i < dataPointCount-1; i++){
-			[NSBezierPath setDefaultLineWidth:2.0];
-			[NSBezierPath strokeLineFromPoint:graphPoints[i] toPoint:graphPoints[i+1]];
-		}
+
 	}
 
+}
+-(void) startAnimation{
+	NSUInteger dataPointCount = [[dataPoints allKeys] count];
+	uint i = 0;
+	NSUInteger xAxisLength = self.frame.size.width - (axisOffset*2);
+	NSUInteger yAxisLength = self.frame.size.height - (axisOffset*2);
+	NSPoint graphPoints[dataPointCount];
+	for (id key in sortedKeys) {
+		NSString * price = [dataPoints valueForKey:key];
+		NSUInteger centValue = [price floatValue]*100;
+		NSUInteger range = (maxPriceInCents-minPriceInCents);
+		NSPoint point = NSMakePoint(axisOffset + (i*(xAxisLength/dataPointCount)), axisOffset + ((centValue-minPriceInCents)*((float)yAxisLength/range)));
+
+		graphPoints[i] = point;
+		i++;
+	}
+	// draw/animate lines
+	CAShapeLayer *l = [CAShapeLayer layer];
+	l.frame = self.bounds;
+	l.strokeColor = [NSColor blackColor].CGColor;
+	NSBezierPath *path = [[NSBezierPath alloc] init];
+	[path moveToPoint:graphPoints[0]];
+	for (uint i = 1; i < dataPointCount; i++){
+
+
+
+		[path lineToPoint:graphPoints[i]];
+		[path moveToPoint:graphPoints[i]];
+
+
+
+		//[NSBezierPath strokeLineFromPoint:graphPoints[i] toPoint:graphPoints[i+1]];
+	}
+	l.path = [path quartzPath];
+
+
+
+	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+	animation.fromValue = [NSNumber numberWithFloat:0.0f];
+	animation.toValue = [NSNumber numberWithFloat:1.0f];
+	animation.duration = 2.0f;
+	[l addAnimation:animation forKey:@"myStroke"];
+	[self.layer addSublayer:l];
 }
 -(void) setData: (NSDictionary *)dataSet{
 	dataPoints = dataSet;
@@ -154,7 +185,7 @@
 	dispatch_async( dispatch_get_main_queue(), ^{
 		[self setNeedsDisplay:YES];
 	});
-
+	[self startAnimation];
 }
 
 @end

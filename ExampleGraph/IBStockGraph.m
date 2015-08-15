@@ -20,29 +20,28 @@
 	NSMutableArray * yAxisLabels;
 	NSUInteger axisOffset;
 }
+- (void)initDefaults{
+	self.yAxisMarkers = 4;
+	axisOffset = 32;
+}
 - (id)init{
 	self = [super init];
 	if (self){
-		self.yAxisMarkers = 4;
-
+		[self initDefaults];
 	}
 	return self;
-
 }
 -(id)initWithFrame:(NSRect)frameRect{
 	self = [super initWithFrame:frameRect];
 	if (self){
-		self.yAxisMarkers = 4;
-
+		[self initDefaults];
 	}
 	return self;
 }
 -(id)initWithCoder:(NSCoder *)coder{
 	self = [super initWithCoder:coder];
 	if (self){
-		self.yAxisMarkers = 4;
-		axisOffset = 32;
-
+		[self initDefaults];
 	}
 	return self;
 }
@@ -57,51 +56,41 @@
 		NSUInteger yAxisLength = self.frame.size.height - (axisOffset*2);
 		NSUInteger dataPointCount = [[dataPoints allKeys] count];
 
-		// compute and draw axis and labels if needed by dirtyRect
-		if (dirtyRect.origin.x <= axisOffset || dirtyRect.origin.y <= axisOffset){
+		NSPoint yAxisMarkerPoints[self.yAxisMarkers];
+		[NSBezierPath setDefaultLineWidth:1.0];
 
+		for (uint i = 0; i < self.yAxisMarkers; i++) {
+			yAxisMarkerPoints[i] = NSMakePoint(axisOffset, axisOffset+([self getAxisNormalizedValue:yAxisLength atPosition:i+1]));
+			NSPoint destPoint = NSMakePoint(axisOffset + xAxisLength, yAxisMarkerPoints[i].y);
 
+			[NSBezierPath strokeLineFromPoint:yAxisMarkerPoints[i] toPoint:destPoint];
+			NSString * label = yAxisLabels[i];
+			NSPoint labelPoint = NSMakePoint(2, yAxisMarkerPoints[i].y - 6);
+			[label drawAtPoint:labelPoint withAttributes:nil];
+		}
 
-			NSPoint yAxisMarkerPoints[self.yAxisMarkers];
-			[NSBezierPath setDefaultLineWidth:1.0];
+		NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+		style.alignment = NSCenterTextAlignment;
+		NSDictionary *attr = [NSDictionary dictionaryWithObject:style forKey:NSParagraphStyleAttributeName];
 
-			for (uint i = 0; i < self.yAxisMarkers; i++) {
-				yAxisMarkerPoints[i] = NSMakePoint(axisOffset, axisOffset+([self getAxisNormalizedValue:yAxisLength atPosition:i+1]));
-				NSPoint destPoint = NSMakePoint(axisOffset + xAxisLength, yAxisMarkerPoints[i].y);
+		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 
-				[NSBezierPath strokeLineFromPoint:yAxisMarkerPoints[i] toPoint:destPoint];
-				NSString * label = yAxisLabels[i];
-				NSPoint labelPoint = NSMakePoint(2, yAxisMarkerPoints[i].y - 6);
-				[label drawAtPoint:labelPoint withAttributes:nil];
-			}
-
-			NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-			style.alignment = NSCenterTextAlignment;
-			NSDictionary *attr = [NSDictionary dictionaryWithObject:style forKey:NSParagraphStyleAttributeName];
-
-			NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-
-			uint i = 0;
-			for (NSString * dateStr in sortedKeys) {
-				[dateFormat setDateFormat:@"yyyy-MM-dd"];
-				NSDate *date = [dateFormat dateFromString:dateStr];
-				[dateFormat setDateFormat:@"M/d"];
-				NSString * dateLabel = [dateFormat stringFromDate:date];
-				[dateLabel drawAtPoint:NSMakePoint(axisOffset + (i*(xAxisLength/dataPointCount)), axisOffset-16) withAttributes:attr];
-				i++;
-			}
-
-
-
-			[NSBezierPath setDefaultLineWidth:3.0];
-			[NSBezierPath strokeLineFromPoint:NSMakePoint(axisOffset, axisOffset) toPoint:NSMakePoint(axisOffset+xAxisLength, axisOffset)];
-			// We subtract one from the origin here since lines are drawn centered
-			[NSBezierPath strokeLineFromPoint:NSMakePoint(axisOffset, axisOffset-1) toPoint:NSMakePoint(axisOffset, axisOffset+yAxisLength)];
-
+		uint i = 0;
+		for (NSString * dateStr in sortedKeys) {
+			[dateFormat setDateFormat:@"yyyy-MM-dd"];
+			NSDate *date = [dateFormat dateFromString:dateStr];
+			[dateFormat setDateFormat:@"M/d"];
+			NSString * dateLabel = [dateFormat stringFromDate:date];
+			[dateLabel drawAtPoint:NSMakePoint(axisOffset + (i*(xAxisLength/dataPointCount)), axisOffset-16) withAttributes:attr];
+			i++;
 		}
 
 
 
+		[NSBezierPath setDefaultLineWidth:3.0];
+		[NSBezierPath strokeLineFromPoint:NSMakePoint(axisOffset, axisOffset) toPoint:NSMakePoint(axisOffset+xAxisLength, axisOffset)];
+		// We subtract one from the origin here since lines are drawn centered
+		[NSBezierPath strokeLineFromPoint:NSMakePoint(axisOffset, axisOffset-1) toPoint:NSMakePoint(axisOffset, axisOffset+yAxisLength)];
 
 	}
 
@@ -137,7 +126,6 @@
 		[path moveToPoint:graphPoints[i]];
 	}
 	l.path = [path quartzPath];
-
 
 	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
 	animation.fromValue = [NSNumber numberWithFloat:0.0f];

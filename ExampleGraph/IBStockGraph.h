@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface IBStockGraph : NSView <NSAnimationDelegate>
-@property NSUInteger xAxisMarkers;
 @property NSUInteger yAxisMarkers;
+@property NSUInteger yAxisMargin;
 -(void) setData: (NSDictionary *)dataSet;
 @end

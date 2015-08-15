@@ -21,6 +21,7 @@
 	// Insert code here to initialize your application
 	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"stockprices" ofType:@"json"];
 	NSDictionary * dataSet = [self loadPrices:filePath];
+	self.graph.yAxisMargin = 400;
 	[self.graph setData:dataSet];
 }
 

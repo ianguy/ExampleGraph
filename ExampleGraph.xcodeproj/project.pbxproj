@@ -12,6 +12,8 @@
 		0D442A581B7C6C370048A549 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D442A571B7C6C370048A549 /* Images.xcassets */; };
 		0D442A5B1B7C6C370048A549 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D442A591B7C6C370048A549 /* MainMenu.xib */; };
 		0D442A671B7C6C370048A549 /* ExampleGraphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D442A661B7C6C370048A549 /* ExampleGraphTests.m */; };
+		0D442A711B7C6C920048A549 /* stockprices.json in Resources */ = {isa = PBXBuildFile; fileRef = 0D442A701B7C6C920048A549 /* stockprices.json */; };
+		0D5C6AC91B7D53CA00905CB7 /* IBStockGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C6AC81B7D53CA00905CB7 /* IBStockGraph.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,9 @@
 		0D442A601B7C6C370048A549 /* ExampleGraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleGraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D442A651B7C6C370048A549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D442A661B7C6C370048A549 /* ExampleGraphTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleGraphTests.m; sourceTree = "<group>"; };
+		0D442A701B7C6C920048A549 /* stockprices.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockprices.json; sourceTree = "<group>"; };
+		0D5C6AC71B7D53CA00905CB7 /* IBStockGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBStockGraph.h; sourceTree = "<group>"; };
+		0D5C6AC81B7D53CA00905CB7 /* IBStockGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBStockGraph.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,8 @@
 				0D442A571B7C6C370048A549 /* Images.xcassets */,
 				0D442A591B7C6C370048A549 /* MainMenu.xib */,
 				0D442A501B7C6C370048A549 /* Supporting Files */,
+				0D5C6AC71B7D53CA00905CB7 /* IBStockGraph.h */,
+				0D5C6AC81B7D53CA00905CB7 /* IBStockGraph.m */,
 			);
 			path = ExampleGraph;
 			sourceTree = "<group>";
@@ -88,6 +95,7 @@
 		0D442A501B7C6C370048A549 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0D442A701B7C6C920048A549 /* stockprices.json */,
 				0D442A511B7C6C370048A549 /* Info.plist */,
 				0D442A551B7C6C370048A549 /* main.m */,
 			);
@@ -192,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D442A581B7C6C370048A549 /* Images.xcassets in Resources */,
+				0D442A711B7C6C920048A549 /* stockprices.json in Resources */,
 				0D442A5B1B7C6C370048A549 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D442A561B7C6C370048A549 /* main.m in Sources */,
+				0D5C6AC91B7D53CA00905CB7 /* IBStockGraph.m in Sources */,
 				0D442A541B7C6C370048A549 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,6 +411,7 @@
 				0D442A6C1B7C6C370048A549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0D442A6D1B7C6C370048A549 /* Build configuration list for PBXNativeTarget "ExampleGraphTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +420,7 @@
 				0D442A6F1B7C6C370048A549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
